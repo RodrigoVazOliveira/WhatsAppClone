@@ -1,4 +1,4 @@
-package whatsappclone.app.rodrigo.whatsappclone;
+package whatsappclone.app.rodrigo.whatsappclone.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +11,10 @@ import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 
 import java.util.Random;
-import java.util.logging.SimpleFormatter;
+
+import whatsappclone.app.rodrigo.whatsappclone.R;
+
+import static android.widget.Toast.*;
 
 public class activity_login extends AppCompatActivity {
 
@@ -67,11 +70,11 @@ public class activity_login extends AppCompatActivity {
 
 
                 }else if (codigoAreaPais.isEmpty()){
-                    Toast msg = new Toast.makeText(activity_login.this, "Por favor digite o código do pais", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Por favor digite o código do pais", LENGTH_SHORT).show();
                 }else if (codigoArea.isEmpty()){
-                    Toast msg = new Toast.makeText(activity_login.this, "Por favor digite o código do área", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Por favor digite o código do área", LENGTH_SHORT).show();
                 }else if (numeroTelefone.isEmpty()){
-                    Toast msg = new Toast.makeText(activity_login.this, "Por favor digite o número de telefone", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Por favor digite o número de telefone", LENGTH_SHORT).show();
                 }
 
             }
