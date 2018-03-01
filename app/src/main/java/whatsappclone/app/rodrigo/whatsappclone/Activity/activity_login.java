@@ -1,7 +1,13 @@
 package whatsappclone.app.rodrigo.whatsappclone.Activity;
 
+import android.Manifest;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +19,8 @@ import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import java.util.Random;
 
 import whatsappclone.app.rodrigo.whatsappclone.R;
+import whatsappclone.app.rodrigo.whatsappclone.helper.Permissao;
+import whatsappclone.app.rodrigo.whatsappclone.helper.Preferencias;
 
 import static android.widget.Toast.*;
 
@@ -21,7 +29,12 @@ public class activity_login extends AppCompatActivity {
     private EditText editCodigoPais;
     private EditText editCodigoArea;
     private EditText editTelefone;
+    private EditText editNome;
     private Button btnCadatrar;
+    private String[] permissaonecessarias = new String[]{
+            Manifest.permission.SEND_SMS,
+            Manifest.permission.INTERNET
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +45,10 @@ public class activity_login extends AppCompatActivity {
         editCodigoArea = findViewById(R.id.editTextCodigoArea);
         editTelefone   = findViewById(R.id.editTextNumeroCelular);
         btnCadatrar    = findViewById(R.id.buttonCadastrar);
+        editNome       = findViewById(R.id.editTextNome);
+
+
+        Permissao.validaPermissoes(1, this, permissaonecessarias);
 
         SimpleMaskFormatter SimplasMaskCodigoPais   = new SimpleMaskFormatter("+NN");
         SimpleMaskFormatter SimplasMaskCodigoArea   = new SimpleMaskFormatter("NN");
@@ -66,7 +83,25 @@ public class activity_login extends AppCompatActivity {
                     Random randomico         = new Random();
                     int tokenNumber         = randomico.nextInt( 8999 ) + 1000;
                     String token            = String.valueOf(tokenNumber);
+                    String mensagemEnvio    = "WhatsApp código de confirmação é: " + token;
 
+                    // Salvar dados
+
+                    Preferencias preferencias = new Preferencias(activity_login.this);
+                    preferencias.salvarUsuarioPreferencias(editNome.getText().toString(), numerocompleto.toString(), token);
+
+
+                    // envio do SMS
+                    String emulador = "5554";
+                    boolean envioTest = enviaSMS("+"+emulador, mensagemEnvio);
+
+                    if (envioTest){
+                        Intent intent = new Intent(activity_login.this, ValidadorActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }else {
+                        Toast.makeText(activity_login.this, "Problemas ao enviar o SMS, tente novamente!",Toast.LENGTH_LONG).show();
+                    }
 
 
                 }else if (codigoAreaPais.isEmpty()){
@@ -80,5 +115,55 @@ public class activity_login extends AppCompatActivity {
             }
         });
 
+    }
+
+    /**
+     *
+     * Envio de TOKEN VIA SMS
+     * @param telefone
+     * @param mensagem
+     * @return boolean
+     */
+    private boolean enviaSMS(String telefone, String mensagem){
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(telefone,null, mensagem, null, null);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,  int[] grantResult){
+
+        super.onRequestPermissionsResult( requestCode,  permissions,   grantResult);
+
+        for (int resultado : grantResult){
+
+            if (resultado == PackageManager.PERMISSION_DENIED){
+                alertaValidacaoPermissao();
+            }
+
+        }
+
+    }
+
+    private void alertaValidacaoPermissao(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Permissões negadas");
+        builder.setMessage("Para usar esse App, é necessário aceitar as permissões");
+        builder.setPositiveButton("CONFIRMAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

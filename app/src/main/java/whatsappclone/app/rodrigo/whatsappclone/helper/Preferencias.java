@@ -3,6 +3,8 @@ package whatsappclone.app.rodrigo.whatsappclone.helper;
 import android.content.SharedPreferences;
 import android.content.Context;
 
+import java.util.HashMap;
+
 /**
  * Created by rodrigovzo on 25/02/2018.
  */
@@ -32,6 +34,17 @@ public class Preferencias {
             this.editor.putString(this.CHAVE_TOKEN, token);
             this.editor.commit();
 
+    }
+
+    public HashMap<String, String> getDadosUsuuario(){
+
+        HashMap<String, String> dadosUsuario = new HashMap<>();
+
+        dadosUsuario.put(CHAVE_NOME, preferences.getString(CHAVE_NOME, null));
+        dadosUsuario.put(CHAVE_TELEFONE, preferences.getString(CHAVE_TELEFONE, null));
+        dadosUsuario.put(CHAVE_TOKEN, preferences.getString(CHAVE_TOKEN, null));
+
+        return dadosUsuario;
     }
 
 }
