@@ -4,81 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center_vertical|center_horizontal"
     android:background="@color/colorPrimary"
-    tools:context="whatsappclone.app.rodrigo.whatsappclone.Activity.ValidadorActivity">
+    tools:context="whatsappclone.app.rodrigo.whatsappclone.Activity.CadastroUsuarioActivity">
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="@dimen/largura_logo"
-        android:layout_height="@dimen/altura_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="44dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/usuario" />
 
-    <TextView
-        android:id="@+id/textView"
+    <EditText
+        android:id="@+id/editTextNomeUsuario"
         android:layout_width="0dp"
-        android:layout_height="29dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:lines="2"
-        android:maxLines="3"
-        android:minLines="2"
-        android:text="Validação"
-        android:textAlignment="center"
+        android:ems="10"
+        android:hint="Digite seu nome completo"
+        android:inputType="textPersonName"
         android:textColor="@color/textColorPrimary"
-        android:textSize="20sp"
+        android:textColorHint="@color/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-    <TextView
-        android:id="@+id/textView2"
+    <EditText
+        android:id="@+id/editTextEmailUsuairo"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="54dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:text="Você recebeu um SMS para validação do seu número, digite o código de validação abaixo:"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Digite seu E-Mail"
+        android:inputType="textEmailAddress"
         android:textColor="@color/textColorPrimary"
+        android:textColorHint="@color/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextNomeUsuario" />
 
     <EditText
-        android:id="@+id/editTextCodigoValidacao"
-        android:layout_width="157dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
-        android:ems="10"
-        android:hint="Digite o código"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
-        android:textColor="@color/textColorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <Button
-        android:id="@+id/buttonValidar"
+        android:id="@+id/editTextSenhaUsuario"
         android:layout_width="0dp"
-        android:layout_height="41dp"
+        android:layout_height="54dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="36dp"
-        android:background="@color/colorPrimaryDark"
-        android:text="validar"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Digite sua senha"
+        android:inputType="textPassword"
         android:textColor="@color/textColorPrimary"
+        android:textColorHint="@color/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextCodigoValidacao" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmailUsuairo" />
+
+    <Button
+        android:id="@+id/buttonCadastrarUsuario"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:theme="@style/botaoPadrao"
+        android:text="@string/botao_cadastrar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSenhaUsuario" />
+
 </android.support.constraint.ConstraintLayout>

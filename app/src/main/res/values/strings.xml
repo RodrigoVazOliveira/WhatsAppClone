@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">WhatsAppClone</string>
     <string name="botao_cadastrar">Cadastrar</string>
+    <string name="sair">Sair</string>
+    <string name="configuracao">Configurações</string>
+    <string name="entrar">Entrar</string>
+    <string name="pesquisa">Pesquiaar</string>
+    <string name="adicionar">Adicionar</string>
 </resources>
