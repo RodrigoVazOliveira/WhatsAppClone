@@ -24,7 +24,9 @@ import com.google.firebase.database.DatabaseReference;
 import whatsappclone.app.rodrigo.whatsappclone.Config.ConfiguracaoFireBase;
 import whatsappclone.app.rodrigo.whatsappclone.Model.Usuario;
 import whatsappclone.app.rodrigo.whatsappclone.R;
+import whatsappclone.app.rodrigo.whatsappclone.helper.Base64Custom;
 import whatsappclone.app.rodrigo.whatsappclone.helper.Permissao;
+import whatsappclone.app.rodrigo.whatsappclone.helper.Preferencias;
 
 public class activity_login extends AppCompatActivity {
 
@@ -75,6 +77,14 @@ public class activity_login extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if (task.isSuccessful()){
+
+                    // salvar os dados de login
+                    Preferencias preferencias = new Preferencias(activity_login.this);
+                    String identificadorUsuarioLogado = Base64Custom.codificarBase64(usuario.getEmailUsuario());
+
+                    preferencias.salvarDadoss(identificadorUsuarioLogado);
+
+
                     Toast.makeText(activity_login.this, "Login efetuado com sucesso!", Toast.LENGTH_LONG).show();
                     abrirTelaPrincipal();
                 }else{
