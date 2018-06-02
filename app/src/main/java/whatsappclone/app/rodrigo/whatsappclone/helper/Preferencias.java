@@ -16,13 +16,8 @@ public class Preferencias {
     private final String NOME_ARQUIVO   = "whatsapp.preferencias";
     private final int MODE              = 0;
     private SharedPreferences.Editor editor;
-    private final String CHAVE_NOME     = "nome";
-
-/**    private final String CHAVE_TELEFONE = "telefone";
-    private final String CHAVE_TOKEN    = "token"; **/
-
+    private final String CHAVE_NOME     = "nomeUsuarioLogado";
     private final String CHAVE_IDENTIFICADOR  = "IdentificadorUsuarioLogado";
-
 
     public Preferencias(Context contextoParametro ){
 
@@ -31,37 +26,21 @@ public class Preferencias {
             this.editor         = this.preferences.edit();
     }
 
-    public void salvarDadoss(String identificadorUsuario){
+    public void salvarDadoss(String identificadorUsuario, String nomeUsuario){
 
+            this.editor.clear();
             this.editor.putString(CHAVE_IDENTIFICADOR, identificadorUsuario);
-        this.editor.commit();
-            /***
-            this.editor.putString(this.CHAVE_NOME, nome);
-            this.editor.putString(this.CHAVE_TELEFONE, telefone);
-            this.editor.putString(this.CHAVE_TOKEN, token);
+            this.editor.putString(CHAVE_NOME, nomeUsuario);
             this.editor.commit();
 
-             **/
-
-
-
     }
 
-
-    /**
-    public HashMap<String, String> getDadosUsuuario(){
-
-        HashMap<String, String> dadosUsuario = new HashMap<>();
-
-        dadosUsuario.put(CHAVE_NOME, preferences.getString(CHAVE_NOME, null));
-        dadosUsuario.put(CHAVE_TELEFONE, preferences.getString(CHAVE_TELEFONE, null));
-        dadosUsuario.put(CHAVE_TOKEN, preferences.getString(CHAVE_TOKEN, null));
-
-        return dadosUsuario;
-    }
-    **/
 
     public String getIdentificador(){
         return preferences.getString(CHAVE_IDENTIFICADOR, null);
+    }
+
+    public String getNomeUsuario(){
+        return preferences.getString(CHAVE_NOME, null);
     }
 }

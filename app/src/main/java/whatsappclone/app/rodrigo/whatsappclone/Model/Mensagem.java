@@ -1,13 +1,11 @@
 package whatsappclone.app.rodrigo.whatsappclone.Model;
 
-public class Conversas {
+public class Mensagem {
 
     private String idUsuario;
-    private String nome;
     private String mensagem;
 
-
-    public Conversas(){
+    public Mensagem() {
 
     }
 
@@ -19,14 +17,6 @@ public class Conversas {
         this.idUsuario = idUsuario;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public String getMensagem() {
         return mensagem;
     }
@@ -35,5 +25,3 @@ public class Conversas {
         this.mensagem = mensagem;
     }
 }
-
-

@@ -33,7 +33,6 @@ public class TabAdapter extends FragmentStatePagerAdapter {
                 break;
 
         }
-
         return fragment;
     }
 

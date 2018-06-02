@@ -21,9 +21,13 @@
         </activity>
         <activity
             android:name=".Activity.CadastroUsuarioActivity"
-            android:parentActivityName=".Activity.MainActivity"></activity>
-        <activity android:name=".Activity.MainActivity"
-            android:parentActivityName=".Activity.activity_login"></activity>
+            android:parentActivityName=".Activity.MainActivity" />
+        <activity
+            android:name=".Activity.MainActivity"
+            android:parentActivityName=".Activity.activity_login" />
+        <activity android:name=".Activity.ConversaActivity"
+            android:parentActivityName=".Activity.MainActivity">
+        </activity>
     </application>
 
 </manifest>

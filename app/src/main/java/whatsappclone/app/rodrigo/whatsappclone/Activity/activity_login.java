@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +20,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import whatsappclone.app.rodrigo.whatsappclone.Config.ConfiguracaoFireBase;
 import whatsappclone.app.rodrigo.whatsappclone.Model.Usuario;
@@ -40,6 +44,10 @@ public class activity_login extends AppCompatActivity {
         permission.INTERNET,
             permission.SEND_SMS
     };
+
+    private ValueEventListener valueEventListenerUsuario;
+    private DatabaseReference firebase;
+    private String identificadorUsuarioLogado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,13 +86,29 @@ public class activity_login extends AppCompatActivity {
 
                 if (task.isSuccessful()){
 
-                    // salvar os dados de login
-                    Preferencias preferencias = new Preferencias(activity_login.this);
-                    String identificadorUsuarioLogado = Base64Custom.codificarBase64(usuario.getEmailUsuario());
+                    identificadorUsuarioLogado = Base64Custom.codificarBase64(usuario.getEmailUsuario());
 
-                    preferencias.salvarDadoss(identificadorUsuarioLogado);
+                    firebase = ConfiguracaoFireBase.getFirebase().child("usuarios")
+                            .child(identificadorUsuarioLogado);
 
+                    valueEventListenerUsuario = new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            // salvar os dados de login
 
+                            Usuario usuarioRecuperado = dataSnapshot.getValue(Usuario.class);
+                            String id                 = Base64Custom.codificarBase64(usuario.getEmailUsuario());
+                            Preferencias preferencias = new Preferencias(activity_login.this);
+                            preferencias.salvarDadoss(id, usuarioRecuperado.getNomeCompletoUsuario());
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    };
+
+                    firebase.addListenerForSingleValueEvent(valueEventListenerUsuario);
                     Toast.makeText(activity_login.this, "Login efetuado com sucesso!", Toast.LENGTH_LONG).show();
                     abrirTelaPrincipal();
                 }else{

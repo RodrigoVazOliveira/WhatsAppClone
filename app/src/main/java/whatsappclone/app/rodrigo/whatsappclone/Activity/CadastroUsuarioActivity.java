@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 import whatsappclone.app.rodrigo.whatsappclone.Config.ConfiguracaoFireBase;
 import whatsappclone.app.rodrigo.whatsappclone.Model.Usuario;
@@ -36,7 +37,6 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
     private EditText senhaUsuario;
     private Button botaoCadastrar;
     private Usuario usuario;
-
 
     private FirebaseAuth autenticacao;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -78,9 +78,6 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                  cadastrarUsuario();
              }
          });
-
-
-
     }
 
     @Override
@@ -101,10 +98,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
     public void cadastrarUsuario(){
 
         // sempre atualizar o google play services
-
-
         autenticacao  = ConfiguracaoFireBase.getFirebaseAutetnicacao();
-
         autenticacao.createUserWithEmailAndPassword(
                 usuario.getEmailUsuario(),
                 usuario.getSenhaUsuario()
@@ -117,8 +111,10 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                     String idCadastro = Base64Custom.codificarBase64(usuario.getEmailUsuario());
                     usuario.setIdUsario(idCadastro);
                     usuario.salvar();
+
+
                    Preferencias preferencias = new Preferencias(CadastroUsuarioActivity.this);
-                   preferencias.salvarDadoss(idCadastro);
+                   preferencias.salvarDadoss(idCadastro, usuario.getNomeCompletoUsuario());
                     abrirLoginUsuario();
                 }else {
 

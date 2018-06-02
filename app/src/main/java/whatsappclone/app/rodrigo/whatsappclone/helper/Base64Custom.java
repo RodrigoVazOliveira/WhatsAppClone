@@ -13,7 +13,7 @@ public class Base64Custom {
     }
 
     public static String decoficarBase64(String texto){
-        return Base64.decode(texto, Base64.DEFAULT).toString();
+        return new String( Base64.decode(texto, Base64.DEFAULT) );
     }
 
 }
